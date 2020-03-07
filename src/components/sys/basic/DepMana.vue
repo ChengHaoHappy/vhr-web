@@ -113,11 +113,14 @@
                     });
                 }
             },
-            removeDepFromDeps(deps, id) {
+            removeDepFromDeps(p,deps, id) {
                 for (let i = 0; i < deps.length; i++) {
                     let d = deps[i];
                     if (d.id == id) {
                         deps.splice(i, 1);
+                        if (deps.length == 0) {
+                            p.parent = false;
+                        }
                         return;
                     } else {
                         this.removeDepFromDeps(d.children, id);
@@ -130,6 +133,9 @@
                     let d = deps[i];
                     if (d.id == dep.parentId) {
                         d.children = d.children.concat(dep);
+                        if (d.children.length > 0) {
+                            d.parent = true;
+                        }
                         return;
                     } else {
                         this.addDepToDeps(d.children, dep);
