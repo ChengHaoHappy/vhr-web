@@ -246,7 +246,7 @@
             },
             initEmps() {
                 this.loading = true;
-                let url = '/employee/basic/';
+                let url = '/employee/basic/?page=' + this.page + '&size=' + this.size;
                 this.getRequest(url).then(resp => {
                     this.loading = false;
                     if (resp) {
