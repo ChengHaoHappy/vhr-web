@@ -485,6 +485,7 @@
                 popVisible2: false,
                 dialogVisible: false, //对话框是否显示
                 inputDepName: '所属部门',
+                //树形控件
                 defaultProps: {
                     children: 'children',
                     label: 'name'
@@ -564,7 +565,33 @@
             this.initPositions();
         },
         methods:{
-
+            //编辑员工信息
+            showEditEmpView(data) {
+                this.initPositions();
+                this.title = '编辑员工信息';
+                this.emp = data;
+                this.inputDepName = data.department.name;
+                this.dialogVisible = true;
+            },
+            //删除员工信息
+            deleteEmp(data) {
+                this.$confirm('此操作将永久删除【' + data.name + '】, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.deleteRequest("/employee/basic/" + data.id).then(resp => {
+                        if (resp) {
+                            this.initEmps();
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
             //添加员工信息
             doAddEmp() {
                 if (this.emp.id) {
@@ -591,13 +618,13 @@
                     });
                 }
             },
-            //
+            //节点被点击时的回调
             handleNodeClick(data) {
                 this.inputDepName = data.name;
                 this.emp.departmentId = data.id;
                 this.popVisible = !this.popVisible
             },
-            //显示部分视图
+            //显示部门弹出框
             showDepView() {
                 this.popVisible = !this.popVisible
             },
@@ -651,6 +678,7 @@
             },
             //初始化数据
             initData() {
+                //名族
                 if (!window.sessionStorage.getItem("nations")) {
                     this.getRequest('/employee/basic/nations').then(resp => {
                         if (resp) {
@@ -661,6 +689,7 @@
                 } else {
                     this.nations = JSON.parse(window.sessionStorage.getItem("nations"));
                 }
+                //职称
                 if (!window.sessionStorage.getItem("joblevels")) {
                     this.getRequest('/employee/basic/joblevels').then(resp => {
                         if (resp) {
@@ -671,6 +700,7 @@
                 } else {
                     this.joblevels = JSON.parse(window.sessionStorage.getItem("joblevels"));
                 }
+                //政治面貌
                 if (!window.sessionStorage.getItem("politicsstatus")) {
                     this.getRequest('/employee/basic/politicsstatus').then(resp => {
                         if (resp) {
@@ -681,6 +711,7 @@
                 } else {
                     this.politicsstatus = JSON.parse(window.sessionStorage.getItem("politicsstatus"));
                 }
+                //部门
                 if (!window.sessionStorage.getItem("deps")) {
                     this.getRequest('/employee/basic/deps').then(resp => {
                         if (resp) {
