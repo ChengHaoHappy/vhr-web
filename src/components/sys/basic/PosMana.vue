@@ -72,7 +72,7 @@
                 title="修改职位职称"
                 :visible.sync="dialogVisible"
                 width="30%"
-                :before-close="handleClose">
+                >
             <div>
                 <div>
                     <span style="color: #25aeff">职位职称</span>
