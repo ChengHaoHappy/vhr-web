@@ -1,5 +1,9 @@
 //配置代理
 let proxyObj = {};
+proxyObj['/ws'] = {
+    ws: true,
+    target: "ws://localhost:8081"
+};
 proxyObj['/'] = {
     ws: false,
     target: 'http://localhost:8081',
@@ -14,10 +18,5 @@ module.exports = {
         host: 'localhost',
         port: 8080,
         proxy: proxyObj,
-        https:false,
-        hotOnly:false,
     },
-    configureWebpack: {
-        devtool: 'source-map',
-    }
 }

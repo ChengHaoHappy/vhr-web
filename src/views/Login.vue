@@ -41,6 +41,7 @@
                         this.postKeyValueRequest('/doLogin', this.loginForm).then(resp => { //服务端返回的参数，respBean的json字符串
                             if (resp) {  //登录成功
                                 // alert(JSON.stringify(resp));
+                                this.$store.commit('INIT_CURRENTHR', resp.obj);
                                 window.sessionStorage.setItem("user",JSON.stringify(resp.obj)); //把用户数据存储到session
                                 let path = this.$route.query.redirect;
                                 this.$router.replace((path =='/' || path == undefined)?'/home':path);

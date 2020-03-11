@@ -3,19 +3,23 @@
         <el-container>
             <el-header class="homeHeader">
                 <div class="title">微人事</div>
-                <el-dropdown class="userInfo" @command="commandHandler">  <!-- Dropdown 下拉菜单  -->
-                    <span class="el-dropdown-link">
+                <div>
+                    <el-button icon="el-icon-bell" type="text" style="margin-right: 8px;color: #000000;" size="normal" @click="goChat"></el-button>
+                    <el-dropdown class="userInfo" @command="commandHandler">  <!-- Dropdown 下拉菜单  -->
+                        <span class="el-dropdown-link">
                      {{user.name}}
                         <i><img v-if="user.userface!=''" :src="user.userface"
                                 style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
                         <i class="el-icon-arrow-down el-icon--right"></i>  <!-- 用户头像 -->
                     </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
-                        <el-dropdown-item command="setting">设置</el-dropdown-item>
-                        <el-dropdown-item command="logout">注销</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
+                            <el-dropdown-item command="setting">设置</el-dropdown-item>
+                            <el-dropdown-item command="logout">注销</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
+
             </el-header>
             <el-container>
                 <el-aside width="200px">            <!-- NavMenu 导航栏菜单 -->
@@ -54,7 +58,7 @@
         name: "Home",
         data() {
             return {
-                user: JSON.parse(window.sessionStorage.getItem("user")), // 啥时候存到session里的?
+                user: JSON.parse(window.sessionStorage.getItem("user")), //取出用户信息
             }
         },
         computed:{
@@ -63,6 +67,9 @@
             }
         },
         methods: {
+            goChat() {
+                this.$router.push("/chat");
+            },
             menuClick(index) {
                 console.log(index);     // <el-menu-item/> 的index 属性
                 this.$router.push(index);    //跳转到index所值组件
