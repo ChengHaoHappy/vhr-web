@@ -26,7 +26,7 @@
         },
         mounted:function() {
             this.$store.dispatch('initData');
-            this.$store.dispatch('connect');
+            // this.$store.dispatch('connect');
         },
         components:{
             card,

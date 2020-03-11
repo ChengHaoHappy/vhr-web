@@ -12,6 +12,7 @@ export const initMenu = (router, store) => {
             let fmtRoutes = formatRoutes(data);   //把菜单的json字符串进行格式化处理
             router.addRoutes(fmtRoutes);          //
             store.commit('initRoutes', fmtRoutes);  //store.commit 方法触发状态变更，存储菜单内组件的状态
+            store.dispatch('connect');//初始化stomp
         }
     })
 }
